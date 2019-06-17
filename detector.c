@@ -1501,21 +1501,22 @@ void apex_get_detections(image im, detection *dets, int num, float thresh, char 
 
             center_x = width / 2 + x1;
             center_y = height / 2 + y1;
-            delta_x = center_x - cut_width / 2;
-            delta_y = center_y - cut_height / 2;
-            distence = delta_x * delta_x + delta_y * delta_y;
+            x = center_x - cut_width / 2;
+            y = center_y - cut_height / 2;
+            distence = x * x + y * y;
             if (distence <= temp_distence)
             {
-                move_x = delta_x * lower;  // 实测，当目标中心距离屏幕中心x像素时，win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, 0, 0, 0)就需要移动x像素
-                move_y = (delta_y - height / offset) * lower;  // (-height / offset * lower)
+                min_x = x; min_y = y;
+                move_x = min_x * lower;  // 实测，当目标中心距离屏幕中心x像素时，win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, 0, 0, 0)就需要移动x像素
+                move_y = (min_y - height / offset) * lower;  // (-height / offset * lower)
                 temp_distence = distence;
             }
         }
         // real x, y
         sum_r_move_x = temp_r_move_x + r_move_x;
         sum_r_move_y = temp_r_move_y + r_move_y;
-        r_x = delta_x - sum_r_move_x;
-        r_y = delta_y - sum_r_move_y;
+        r_x = min_x - sum_r_move_x;
+        r_y = min_y - sum_r_move_y;
 
         v_x = ((r_temp2_x - r_temp1_x) + (r_temp3_x - r_temp2_x)) / 2;  //# 用过去3张图片的位置推算目标的两次速度，计算平均值
         v_y = ((r_temp2_y - r_temp1_y) + (r_temp3_y - r_temp2_y)) / 2;
@@ -1655,13 +1656,32 @@ void apex_get_detections_improve(image im, detection *dets, int num, float thres
             center_y = height / 2 + y0;
             x = center_x - cut_width / 2;
             y = center_y - cut_height / 2;
-            distence = x * x + y * y;
-            if (distence <= temp_distence)
+            if (last_v_x > 0)
             {
-                x3 = x;
-                y3 = y;
-                temp_distence = distence;
+                X = cut_width;
+                Y = cut_height;
             }
+            else
+            {
+                X = last_v_x * delta_time * 2;
+                Y = last_v_y * delta_time * 2;
+            }
+            if ((x <= X) && (y <= Y)) 还没好
+            {
+                distence = x * x + y * y;
+                if (distence <= temp_distence)
+                {
+                    x3 = x;
+                    y3 = y;
+                    temp_distence = distence;
+                }
+            }
+            else
+            {//保险起见，这里置0，应该不会出现这种情况
+                x3 = 0;
+                y3 = 0;
+            }
+            
         }
         // real x, y
         //sum_r_move_x = temp_r_move_x + r_move_x;
