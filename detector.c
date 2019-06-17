@@ -1244,14 +1244,14 @@ void calc_anchors(char *datacfg, int num_of_clusters, int width, int height, int
 
 /*************************************************************************************************************/
 //#include <C:\MinGW\include\ddk\ndis.h> ULONG MicrosecondsToSleep = 500; NdisMSleep(MicrosecondsToSleep);
-//Çı¶¯µÄ·½·¨»á³öÒ»¶Ñ´íÎó
+//é©±åŠ¨çš„æ–¹æ³•ä¼šå‡ºä¸€å †é”™è¯¯
 
 cap_result capture_result;
 image im;
 int cut_width = 416; int cut_height = 416; int channels = 3;
 
 double frame_time = 1.0 / 80 * 1000; 
-double control_time = 1.0 / 80 * 1000;  //ms 0.5ÊÇ²¹³¥£¬ÈÃ×ÜÌåÊ±¼ä¸ÕºÃ¿ØÖÆÔÚ1.0 / 80 * 1000, 12.5ms×óÓÒ
+double control_time = 1.0 / 80 * 1000;  //ms 0.5æ˜¯è¡¥å¿ï¼Œè®©æ€»ä½“æ—¶é—´åˆšå¥½æ§åˆ¶åœ¨1.0 / 80 * 1000, 12.5mså·¦å³
 float image_cut_data[519168]; //416*416*3
 //image_cut_data = (float*)malloc(cut_width * cut_height * channels);
 
@@ -1259,15 +1259,15 @@ float image_cut_data[519168]; //416*416*3
 
 void capture()
 {
-    //HANDLE WaitTimer = CreateWaitableTimer(NULL, 1, NULL); ÓÃÓÚtimer_microSleep(1, WaitTimer);
+    //HANDLE WaitTimer = CreateWaitableTimer(NULL, 1, NULL); ç”¨äºtimer_microSleep(1, WaitTimer);
 
-    /////µ÷ÓÃ½ØÍ¼cutImg();
-    if (!Init())  //ÕâÀï·Ç³£ÖØÒª£¬³õÊ¼»¯½ØÍ¼Ïà¹ØµÄ¶«Î÷£¬±ØĞëÒªÓĞ
+    /////è°ƒç”¨æˆªå›¾cutImg();
+    if (!Init())  //è¿™é‡Œéå¸¸é‡è¦ï¼Œåˆå§‹åŒ–æˆªå›¾ç›¸å…³çš„ä¸œè¥¿ï¼Œå¿…é¡»è¦æœ‰
     {
         Finit();
         printf("not support dxgi.\n");
     }
-    int* pImgData1 = (int*)malloc(14745600); //ÓÃÓÚÏÂÃæµÄQueryFrame(pImgData1, imgLength);
+    int* pImgData1 = (int*)malloc(14745600); //ç”¨äºä¸‹é¢çš„QueryFrame(pImgData1, imgLength);
     im.data = 0, im.w = cut_width, im.h = cut_height, im.c = channels;
     capture_result.im_float = 0, capture_result.im_unchar = 0, capture_result.new_flag = 0;
 
@@ -1298,11 +1298,11 @@ void capture()
             {
                 int sleep_time = (int)((control_time - cap_time) * 1000);
                 //printf("sleep_time%d", sleep_time);
-                high_precision_microSleep(sleep_time); //Î¢Ãë£¬Õâ¸ö¾«¶È¿ÉÒÔ¿ØÖÆÔÚ¡À3Î¢Ãë,ÓÃÓÚ¾«È·¿ØÖÆ´óÓÚ2msµÄsleep£¬Êµ¼ÊÉÏ²¢²»ÊÇÕæÕıµÄsleep
-                //microSleep(sleep_time); //Õâ¸öµÄ¾«¶ÈÔÚ1~2ms×óÓÒ,ÊÇÕæµÄsleep£¬µ«ÊÇ²»¹»×¼È·
-                //nanoSleep(sleep_time*1000); //Õâ¸öµÄ¾«¶ÈÒ»ÑùÊÇÔÚ1~2ms×óÓÒ£¬ÒªÄãºÎÓÃ
+                high_precision_microSleep(sleep_time); //å¾®ç§’ï¼Œè¿™ä¸ªç²¾åº¦å¯ä»¥æ§åˆ¶åœ¨Â±3å¾®ç§’,ç”¨äºç²¾ç¡®æ§åˆ¶å¤§äº2msçš„sleepï¼Œå®é™…ä¸Šå¹¶ä¸æ˜¯çœŸæ­£çš„sleep
+                //microSleep(sleep_time); //è¿™ä¸ªçš„ç²¾åº¦åœ¨1~2mså·¦å³,æ˜¯çœŸçš„sleepï¼Œä½†æ˜¯ä¸å¤Ÿå‡†ç¡®
+                //nanoSleep(sleep_time*1000); //è¿™ä¸ªçš„ç²¾åº¦ä¸€æ ·æ˜¯åœ¨1~2mså·¦å³ï¼Œè¦ä½ ä½•ç”¨
                 //select_microSleep(500);
-                //Sleep(1); //¾«¶È2ms.
+                //Sleep(1); //ç²¾åº¦2ms.
                 //SleepShort(sleep_time/1000);
             }
             printf("Total capture finished in %lf milli-seconds.\n", (((double)get_time_chrono() - time1) / 1000000));
@@ -1310,12 +1310,12 @@ void capture()
         }
         else
         {
-            //Sleep(0); CPUÕ¼ÓÃÌ«¸ß£¬¾ÍÊÇÒ»Ö±Ñ­»·Ë¯Ãß2Î¢Ãë¡£
-            //select_microSleep(1); //¾«¶È900Î¢Ãë£¬Ğ¡ÓÚ900µÄÈ«¶¼Ëã900Î¢Ãë¡£cpuÕ¼ÓÃÎª0
-            //select_microSleep(500); //¾«¶È450Î¢Ãë£¬Ğ¡ÓÚ450µÄÈ«¶¼Ëã450Î¢Ãë¡£select_microSleep(500)Ê±»áË¯Ãß950Î¢Ãë
-            //microSleep(sleep_time); //Õâ¸öµÄ¾«¶ÈÔÚ1~2ms×óÓÒ,ÊÇÕæµÄsleep£¬µ«ÊÇ²»¹»×¼È·£¬cpuÕ¼ÓÃÎª0
-            //nanoSleep(sleep_time*1000); //Õâ¸öµÄ¾«¶ÈÒ»ÑùÊÇÔÚ1~2ms×óÓÒ£¬ÒªÄãºÎÓÃ
-            //SleepShort(0.1); //SleepShort(0.1)£¬Ğ¡ÓÚ0.5Ë¯0.45ms,¾«¶È450Î¢Ãë£»cpuÕ¼ÓÃÎª0
+            //Sleep(0); CPUå ç”¨å¤ªé«˜ï¼Œå°±æ˜¯ä¸€ç›´å¾ªç¯ç¡çœ 2å¾®ç§’ã€‚
+            //select_microSleep(1); //ç²¾åº¦900å¾®ç§’ï¼Œå°äº900çš„å…¨éƒ½ç®—900å¾®ç§’ã€‚cpuå ç”¨ä¸º0
+            //select_microSleep(500); //ç²¾åº¦450å¾®ç§’ï¼Œå°äº450çš„å…¨éƒ½ç®—450å¾®ç§’ã€‚select_microSleep(500)æ—¶ä¼šç¡çœ 950å¾®ç§’
+            //microSleep(sleep_time); //è¿™ä¸ªçš„ç²¾åº¦åœ¨1~2mså·¦å³,æ˜¯çœŸçš„sleepï¼Œä½†æ˜¯ä¸å¤Ÿå‡†ç¡®ï¼Œcpuå ç”¨ä¸º0
+            //nanoSleep(sleep_time*1000); //è¿™ä¸ªçš„ç²¾åº¦ä¸€æ ·æ˜¯åœ¨1~2mså·¦å³ï¼Œè¦ä½ ä½•ç”¨
+            //SleepShort(0.1); //SleepShort(0.1)ï¼Œå°äº0.5ç¡0.45ms,ç²¾åº¦450å¾®ç§’ï¼›cpuå ç”¨ä¸º0
 
             double time1 = get_time_chrono();
             //CloseHandle(WaitTimer);
@@ -1325,7 +1325,7 @@ void capture()
             ///int imgLength = 14745600;
             ///BOOL get_frame = QueryFrame(pImgData1, imgLength);
             ///printf("%d XXXXX in %lf milli-seconds.\n", get_frame, (((double)get_time_chrono() - time1) / 1000000));
-            SleepShort(0.1); //SleepShort(0.5)Ë¯0.9ms£»SleepShort(0.1)£¬Ğ¡ÓÚ0.5Ë¯0.45ms£»SleepShort(1)Ë¯1.45ms×óÓÒ
+            SleepShort(0.1); //SleepShort(0.5)ç¡0.9msï¼›SleepShort(0.1)ï¼Œå°äº0.5ç¡0.45msï¼›SleepShort(1)ç¡1.45mså·¦å³
             printf("XXXXX in %lf milli-seconds.\n", (((double)get_time_chrono() - time1) / 1000000));
         }
     }
@@ -1334,15 +1334,15 @@ void capture()
 int compare_image(float* tempdata, image img);
 int compare_image(float* tempdata, image img)
 {
-    int i = 15000; //¹²²éÑ¯10000¸öµã£¬ÓÃÀ´±È½ÏÁ½¸öÍ¼ÊÇ·ñÒ»Ñù
+    int i = 15000; //å…±æŸ¥è¯¢10000ä¸ªç‚¹ï¼Œç”¨æ¥æ¯”è¾ƒä¸¤ä¸ªå›¾æ˜¯å¦ä¸€æ ·
     int max = img.w * img.h * img.c;
     int min = 1;
     int pixel_n = 0;
 
     while (i--)
     {
-        srand((unsigned)time(NULL)); /*ÓÃÊ±¼ä×öÖÖ£¬Ã¿´Î²úÉúËæ»úÊı²»Ò»Ñù*/
-        pixel_n = rand(NULL) % (max - min + 1) + min; /*²úÉúmin~maxµÄËæ»úÊı*/
+        srand((unsigned)time(NULL)); /*ç”¨æ—¶é—´åšç§ï¼Œæ¯æ¬¡äº§ç”Ÿéšæœºæ•°ä¸ä¸€æ ·*/
+        pixel_n = rand(NULL) % (max - min + 1) + min; /*äº§ç”Ÿmin~maxçš„éšæœºæ•°*/
         if (tempdata[pixel_n] == im.data[pixel_n])
         {
             if (i <= 1) return 1;
@@ -1360,7 +1360,7 @@ int compare_image(float* tempdata, image img)
 void save_capture()
 {
     //capture_result.im_unchar = 0;
-    Sleep(3000); //ÈÃ½ØÍ¼³ÌĞòÏÈ³õÊ¼»¯
+    Sleep(3000); //è®©æˆªå›¾ç¨‹åºå…ˆåˆå§‹åŒ–
 
     SYSTEMTIME currentTime;
     GetSystemTime(&currentTime);
@@ -1371,7 +1371,7 @@ void save_capture()
 
     char str_year[10], str_month[10], str_day[10], str_hour[10], str_min[10], str_sec[10], str_millsec[10];
     int number_year, number_month, number_day, number_hour, number_min, number_sec, number_millsec;
-    //char str_timeX[50] = {"1234567890"};    //char a[10] = {"1234567890"} ÊÇ¶¨Òå×Ö·ûĞÍÊı×é£¬¼´a[0]Îª"1",a[1]Îª"2"
+    //char str_timeX[50] = {"1234567890"};    //char a[10] = {"1234567890"} æ˜¯å®šä¹‰å­—ç¬¦å‹æ•°ç»„ï¼Œå³a[0]ä¸º"1",a[1]ä¸º"2"
 
 
     int image_cut_length = cut_width * cut_height* channels;
@@ -1384,7 +1384,7 @@ void save_capture()
 
             //filename
             GetSystemTime(&currentTime);
-            char str_time[50] = "G:/CVTemp/";  //ÖØÖÃÃû³Æ£¬·ñÔò»áµş¼Ó
+            char str_time[50] = "G:/CVTemp/";  //é‡ç½®åç§°ï¼Œå¦åˆ™ä¼šå åŠ 
             number_year = currentTime.wYear;
             number_month = currentTime.wMonth;
             number_day = currentTime.wDay;
@@ -1415,7 +1415,7 @@ void save_capture()
             
             if (flag_same)
             {
-                select_microSleep(1); //900Î¢Ãë
+                select_microSleep(1); //900å¾®ç§’
                 //#double cap_time = ((double)get_time_chrono() - time2) / 1000000;
                 //#printf("!!save cmopare same in %lf milli-seconds. flag_same: %d\n", cap_time, flag_same);
                 continue;
@@ -1424,14 +1424,14 @@ void save_capture()
             {
                 //capture_result = cutImg();
                 //#image im = load_image_capture(capture_result.im_float, cut_width, cut_height, channels);
-                cap_save_image(capture_result.im_unchar, filename , BMP, 100); //±£´æÎªBMPËÙ¶È¿ì£¬JPGÒªÂı5ms×óÓÒ
+                cap_save_image(capture_result.im_unchar, filename , BMP, 100); //ä¿å­˜ä¸ºBMPé€Ÿåº¦å¿«ï¼ŒJPGè¦æ…¢5mså·¦å³
                 //#double cap_time = ((double)get_time_chrono() - time2) / 1000000;
                 //#printf("XXXsave finished in %lf milli-seconds. flag_same: %d\n", cap_time, flag_same);
                 /*
                 if (cap_time < control_time)
                 {
                     int sleep_time = (int)((control_time - cap_time) * 1000);
-                    microSleep(sleep_time); //Î¢Ãë
+                    microSleep(sleep_time); //å¾®ç§’
                 }
                 printf("!!!!total Save capture in %lf milli-seconds.\n", ((double)get_time_chrono() - time2) / 1000000);
                 //printf("save_capture finished\n");
@@ -1506,7 +1506,7 @@ void apex_get_detections(image im, detection *dets, int num, float thresh, char 
             distence = delta_x * delta_x + delta_y * delta_y;
             if (distence <= temp_distence)
             {
-                move_x = delta_x * lower;  // Êµ²â£¬µ±Ä¿±êÖĞĞÄ¾àÀëÆÁÄ»ÖĞĞÄxÏñËØÊ±£¬win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, 0, 0, 0)¾ÍĞèÒªÒÆ¶¯xÏñËØ
+                move_x = delta_x * lower;  // å®æµ‹ï¼Œå½“ç›®æ ‡ä¸­å¿ƒè·ç¦»å±å¹•ä¸­å¿ƒxåƒç´ æ—¶ï¼Œwin32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, 0, 0, 0)å°±éœ€è¦ç§»åŠ¨xåƒç´ 
                 move_y = (delta_y - height / offset) * lower;  // (-height / offset * lower)
                 temp_distence = distence;
             }
@@ -1517,14 +1517,14 @@ void apex_get_detections(image im, detection *dets, int num, float thresh, char 
         r_x = delta_x - sum_r_move_x;
         r_y = delta_y - sum_r_move_y;
 
-        v_x = ((r_temp2_x - r_temp1_x) + (r_temp3_x - r_temp2_x)) / 2;  //# ÓÃ¹ıÈ¥3ÕÅÍ¼Æ¬µÄÎ»ÖÃÍÆËãÄ¿±êµÄÁ½´ÎËÙ¶È£¬¼ÆËãÆ½¾ùÖµ
+        v_x = ((r_temp2_x - r_temp1_x) + (r_temp3_x - r_temp2_x)) / 2;  //# ç”¨è¿‡å»3å¼ å›¾ç‰‡çš„ä½ç½®æ¨ç®—ç›®æ ‡çš„ä¸¤æ¬¡é€Ÿåº¦ï¼Œè®¡ç®—å¹³å‡å€¼
         v_y = ((r_temp2_y - r_temp1_y) + (r_temp3_y - r_temp2_y)) / 2;
-        if (GetAsyncKeyState(0x41)) //°´ÏÂA
+        if (GetAsyncKeyState(0x41)) //æŒ‰ä¸‹A
         {
             kkk = 8;
             //printf("AAAAAAAAAAAAAAAAA\n");
         }
-        else if (GetAsyncKeyState(0x44))//°´ÏÂD
+        else if (GetAsyncKeyState(0x44))//æŒ‰ä¸‹D
             kkk = -8;
         else
             kkk = 0;
@@ -1532,11 +1532,11 @@ void apex_get_detections(image im, detection *dets, int num, float thresh, char 
         r_move_x = (int)(move_x + v_x * v_scale);
         r_move_y = (int)(move_y + v_y * v_scale);
 
-        mouse_event(MOUSEEVENTF_MOVE, r_move_x, r_move_y, 0, 0); //ÕâÀïÏÈÓÃ4/5°É£¬¸Ğ¾õÓĞµãÓÃ£¬²»ÒªÒ»´Îµ½Î»£¬¿ÉÒÔ±ÜÃâ¹ıµ÷£¿
+        mouse_event(MOUSEEVENTF_MOVE, r_move_x, r_move_y, 0, 0); //è¿™é‡Œå…ˆç”¨4/5å§ï¼Œæ„Ÿè§‰æœ‰ç‚¹ç”¨ï¼Œä¸è¦ä¸€æ¬¡åˆ°ä½ï¼Œå¯ä»¥é¿å…è¿‡è°ƒï¼Ÿ
         //#printf("XXXXXXX %f %f %f %f %d %d\n", move_x, move_y, v_x, v_y, r_move_x, r_move_y);
-        //# sleep(0.010)  # ÔÚÊó±êÒÆ¶¯ºó£¬¸øÆÁÄ»Ê±¼äË¢ĞÂ£¬±£Ö¤»ñµÃµÄÍ¼ÊÇÒÆ¶¯ºóµÄÍ¼
+        //# sleep(0.010)  # åœ¨é¼ æ ‡ç§»åŠ¨åï¼Œç»™å±å¹•æ—¶é—´åˆ·æ–°ï¼Œä¿è¯è·å¾—çš„å›¾æ˜¯ç§»åŠ¨åçš„å›¾
         
-        //# ´¦ÀíÖĞ¼äÖµ
+        //# å¤„ç†ä¸­é—´å€¼
         r_temp3_x = r_x, r_temp3_y = r_y;
         r_temp1_x = r_temp2_x, r_temp1_y = r_temp2_y;
         r_temp2_x = r_temp3_x, r_temp2_y = r_temp3_y;
@@ -1613,16 +1613,21 @@ void apex_get_detections_improve(image im, detection *dets, int num, float thres
     float r_temp1_x, r_temp1_y, r_temp2_x, r_temp2_y, r_temp3_x, r_temp3_y;
     int r_move_x, r_move_y;
 
-    float lower = 0.25, offset = 3.8, v_scale = 0.35, kkk = 0;
+    float lower = 0.25, offset = 3.8, v_scale = 0.35, v_x_camera = 20;
     temp_distence = cut_width * cut_height / 4;
-    r_temp1_x = 0, r_temp1_y = 0;
-    r_temp2_x = 0, r_temp2_y = 0;
-    r_temp3_x = 0, r_temp3_y = 0;
-    temp_r_move_x = 0;
-    temp_r_move_y = 0;
-    sum_r_move_x = 0;
-    sum_r_move_y = 0;
+    x3_x1 = 0; y3_y1 = 0;
+    x2_x1 = 0; y2_y1 = 0;
+    temp_r_move_x1 = 0, temp_r_move_y1 = 0;
+    temp_r_move_x2 = 0, temp_r_move_y2 = 0;
     r_move_x = 0, r_move_y = 0;
+    x0 = 0; y0 = 0;
+    x1 = 0; y1 = 0;
+    x2 = 0; y2 = 0;
+    x3 = 0; y3 = 0;
+    v_x = 0; v_y = 0;
+    delta_time1 = 0;
+    delta_time2 = 0;
+    delta_time = 0;
 
     if (selected_detections_num)
     {
@@ -1653,18 +1658,21 @@ void apex_get_detections_improve(image im, detection *dets, int num, float thres
             distence = x * x + y * y;
             if (distence <= temp_distence)
             {
-                min_x = x;
-                min_y = y;
+                x3 = x;
+                y3 = y;
                 temp_distence = distence;
             }
         }
         // real x, y
-        sum_r_move_x = temp_r_move_x + r_move_x;
-        sum_r_move_y = temp_r_move_y + r_move_y;
-        r_x = min_x - sum_r_move_x;
-        r_y = min_y - sum_r_move_y;
-
+        //sum_r_move_x = temp_r_move_x + r_move_x;
+        //sum_r_move_y = temp_r_move_y + r_move_y;
+        x3_x1 = x3 - temp_r_move_x2 - temp_r_move_x1;
+        y3_y1 = y3 - temp_r_move_y2 - temp_r_move_y1;
+        x2_x1 = x2 - temp_r_move_x1;
+        y2_y1 = y2 - temp_r_move_y1;
+        
         delta_time1 = (time_end2 - time_end1)/1000000; delta_time2 = (time_end3 - time_end2)/1000000;
+        
         if ((delta_time1 == 0) || (delta_time2 == 0))
         {
             v_x = 0;
@@ -1672,49 +1680,63 @@ void apex_get_detections_improve(image im, detection *dets, int num, float thres
         }
         else
         {
-            v_x = ((r_temp2_x - r_temp1_x) / delta_time1 + (r_temp3_x - r_temp2_x) / delta_time2) / 2;  //# ÓÃ¹ıÈ¥3ÕÅÍ¼Æ¬µÄÎ»ÖÃÍÆËãÄ¿±êµÄÁ½´ÎËÙ¶È£¬¼ÆËãÆ½¾ùÖµ
-            v_y = ((r_temp2_y - r_temp1_y) / delta_time1 + (r_temp3_y - r_temp2_y) / delta_time2) / 2;
+            v_x = ((x2_x1 - x1) / delta_time1 + (x3_x1 - x2_x1) / delta_time2) / 2;  //# ç”¨è¿‡å»3å¼ å›¾ç‰‡çš„ä½ç½®æ¨ç®—ç›®æ ‡çš„ä¸¤æ¬¡é€Ÿåº¦ï¼Œè®¡ç®—å¹³å‡å€¼
+            v_y = ((y2_y1 - y1) / delta_time1 + (y3_y1 - y2_y1) / delta_time2) / 2;
         }
 
-        if (GetAsyncKeyState(0x41)) //°´ÏÂA
+        if (GetAsyncKeyState(0x41)) //æŒ‰ä¸‹A
         {
-            kkk = 8;
+            v_x = v_x + v_x_camera;
+            v_y = v_y + 0;
             //printf("AAAAAAAAAAAAAAAAA\n");
         }
-        else if (GetAsyncKeyState(0x44))//°´ÏÂD
-            kkk = -8;
+        else if (GetAsyncKeyState(0x44))//æŒ‰ä¸‹D
+        {
+            v_x = v_x - v_x_camera;
+            v_y = v_y + 0;
+        }
         else
-            kkk = 0;
-        v_x = v_x + kkk;
-        v_y = v_y + 0;
-        move_x = min_x + v_x * delta_time;  // Êµ²â£¬µ±Ä¿±êÖĞĞÄ¾àÀëÆÁÄ»ÖĞĞÄxÏñËØÊ±£¬win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, 0, 0, 0)¾ÍĞèÒªÒÆ¶¯xÏñËØ
-        move_y = (min_y - height / offset) + v_y * delta_time;  // (-height / offset * lower)
+        {
+            v_x;
+            v_y;
+        }
+        //v_x = v_x + kkk;
+        //v_y = v_y + 0;
+        move_x = x3 + v_x * delta_time;  // å®æµ‹ï¼Œå½“ç›®æ ‡ä¸­å¿ƒè·ç¦»å±å¹•ä¸­å¿ƒxåƒç´ æ—¶ï¼Œwin32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, 0, 0, 0)å°±éœ€è¦ç§»åŠ¨xåƒç´ 
+        move_y = (y3 - height / offset) + v_y * delta_time;  // (-height / offset * lower)
         r_move_x = (int)(move_x * lower);
         r_move_y = (int)(move_y * lower);
 
-        mouse_event(MOUSEEVENTF_MOVE, r_move_x, r_move_y, 0, 0); //ÕâÀïÏÈÓÃ4/5°É£¬¸Ğ¾õÓĞµãÓÃ£¬²»ÒªÒ»´Îµ½Î»£¬¿ÉÒÔ±ÜÃâ¹ıµ÷£¿
+        mouse_event(MOUSEEVENTF_MOVE, r_move_x, r_move_y, 0, 0); //è¿™é‡Œå…ˆç”¨4/5å§ï¼Œæ„Ÿè§‰æœ‰ç‚¹ç”¨ï¼Œä¸è¦ä¸€æ¬¡åˆ°ä½ï¼Œå¯ä»¥é¿å…è¿‡è°ƒï¼Ÿ
         //#printf("XXXXXXX %f %f %f %f %d %d\n", move_x, move_y, v_x, v_y, r_move_x, r_move_y);
-        //# sleep(0.010)  # ÔÚÊó±êÒÆ¶¯ºó£¬¸øÆÁÄ»Ê±¼äË¢ĞÂ£¬±£Ö¤»ñµÃµÄÍ¼ÊÇÒÆ¶¯ºóµÄÍ¼
+        //# sleep(0.010)  # åœ¨é¼ æ ‡ç§»åŠ¨åï¼Œç»™å±å¹•æ—¶é—´åˆ·æ–°ï¼Œä¿è¯è·å¾—çš„å›¾æ˜¯ç§»åŠ¨åçš„å›¾
 
-        //# ´¦ÀíÖĞ¼äÖµ
-        r_temp3_x = r_x, r_temp3_y = r_y;
-        r_temp1_x = r_temp2_x, r_temp1_y = r_temp2_y;
-        r_temp2_x = r_temp3_x, r_temp2_y = r_temp3_y;
-        temp_r_move_x = r_move_x;
-        temp_r_move_y = r_move_y;
+        //# å¤„ç†ä¸­é—´å€¼
+        //r_temp3_x = r_x, r_temp3_y = r_y;
+        //r_temp1_x = r_temp2_x, r_temp1_y = r_temp2_y;
+        //r_temp2_x = r_x, r_temp2_y = r_y;
+        temp_r_move_x1 = temp_r_move_x2; temp_r_move_y1 = temp_r_move_y2;
+        temp_r_move_x2 = r_move_x; temp_r_move_y2 = r_move_y;
+        x1 = x2; y1 = y2;
+        x2 = x3; y2 = y3;
         //dt2 = time.perf_counter() - t2
         //print('total. (%.5fs)' % dt2)
     }
     else
     {
-        //var = 1
-        r_temp1_x = 0, r_temp1_y = 0;
-        r_temp2_x = 0, r_temp2_y = 0;
-        r_temp3_x = 0, r_temp3_y = 0;
-        temp_r_move_x = 0;
-        temp_r_move_y = 0;
-        sum_r_move_x = 0;
-        sum_r_move_y = 0;
+        x3_x1 = 0; y3_y1 = 0;
+        x2_x1 = 0; y2_y1 = 0;
+        temp_r_move_x1 = 0, temp_r_move_y1 = 0;
+        temp_r_move_x2 = 0, temp_r_move_y2 = 0;
+        r_move_x = 0, r_move_y = 0;
+        x0 = 0; y0 = 0;
+        x1 = 0; y1 = 0;
+        x2 = 0; y2 = 0;
+        x3 = 0; y3 = 0;
+        v_x = 0; v_y = 0;
+        delta_time1 = 0;
+        delta_time2 = 0;
+        delta_time = 0;
     }
 
     /*
@@ -1771,8 +1793,8 @@ void apex_detector_multi()
     ngpus = 1;
 
     //int clear = find_arg(argc, argv, "-clear");
-    char *datacfg = "#apex2019_1class.data"; //±ØĞë·ÅÔÚcfgÎÄ¼ş¼ĞÏÂ£¬³ÌĞòÀïÃæ»á×Ô¶¯×ª»»³Écfg/***
-    char *cfgfile = "#apex_2pred_1class_416_1anchor_yolov3-tiny.cfg"; //±ØĞë·ÅÔÚcfgÎÄ¼ş¼ĞÏÂ
+    char *datacfg = "#apex2019_1class.data"; //å¿…é¡»æ”¾åœ¨cfgæ–‡ä»¶å¤¹ä¸‹ï¼Œç¨‹åºé‡Œé¢ä¼šè‡ªåŠ¨è½¬æ¢æˆcfg/***
+    char *cfgfile = "#apex_2pred_1class_416_1anchor_yolov3-tiny.cfg"; //å¿…é¡»æ”¾åœ¨cfgæ–‡ä»¶å¤¹ä¸‹
     char *weights = "backup/#apex_2pred_1class_416_1anchor_yolov3-tiny_last.weights";
     if (weights)
         if (strlen(weights) > 0)
@@ -1802,7 +1824,7 @@ void apex_detector_multi()
             name_list, names_size, net.layers[net.n - 1].classes, cfgfile);
         if (net.layers[net.n - 1].classes > names_size) getchar();
     }
-    srand(2222222); //Ê¹ÓÃÁËÒ»¸ö¹Ì¶¨µÄËæ»úÊıÖÖ×Ó
+    srand(2222222); //ä½¿ç”¨äº†ä¸€ä¸ªå›ºå®šçš„éšæœºæ•°ç§å­
     char buff[256];
     char *input = buff;
     char *json_buf = NULL;
@@ -1834,29 +1856,29 @@ void apex_detector_multi()
         //image sized = load_image_resize(input, net.w, net.h, net.c, &im);
 
         
-        //im.c;  //ÓÃdarknetÔ¤²âÊ±£¬Ö»ĞèÒª3Í¨µÀ
+        //im.c;  //ç”¨darkneté¢„æµ‹æ—¶ï¼Œåªéœ€è¦3é€šé“
 
         //unsigned char *image_cut_data = (unsigned char*)malloc(cut_width * cut_height * channels);
-        Sleep(1000);  //ÈÃ½ØÍ¼³ÌĞòÏÈ³õÊ¼»¯
+        Sleep(1000);  //è®©æˆªå›¾ç¨‹åºå…ˆåˆå§‹åŒ–
         printf("network initial complete!");
         while (1)
         {
             if (GetAsyncKeyState(VK_LBUTTON))
             {
                 double time1 = get_time_chrono();
-                int flag_same = compare_image(image_cut_data, im); //±È½ÏÃ¿´ÎµÄÍ¼Æ¬ÊÇ·ñÒ»Ñù
+                int flag_same = compare_image(image_cut_data, im); //æ¯”è¾ƒæ¯æ¬¡çš„å›¾ç‰‡æ˜¯å¦ä¸€æ ·
                 
                 if (flag_same) //if (flag_same) //capture_result.new_flag
                 {
                     //double compare_time = ((double)get_time_chrono() - time1) / 1000000;
                     //printf("!!detect cmopare same in %lf milli-seconds. flag_same: %d\n", compare_time, flag_same);
-                    //microSleep(100); //Î¢Ãë
+                    //microSleep(100); //å¾®ç§’
                     SleepShort(0.1);
                     continue;
                 }
-                else //Í¼Æ¬ºÍÇ°Ò»´Î²»Ò»Ñù²Å½øĞĞÊ¶±ğ
+                else //å›¾ç‰‡å’Œå‰ä¸€æ¬¡ä¸ä¸€æ ·æ‰è¿›è¡Œè¯†åˆ«
                 {
-                    //saveBmpFile("2xx.bmp", image_cut_data, imgLengthCut); //±£´æÎªbmp¸ñÊ½
+                    //saveBmpFile("2xx.bmp", image_cut_data, imgLengthCut); //ä¿å­˜ä¸ºbmpæ ¼å¼
                     //char str_time[50] = "1xx.bmp";
                     //LPCSTR filename1 = str_time;
                     //saveBmpFile(filename1, image_cut_data, imgLengthCut);
@@ -1872,10 +1894,10 @@ void apex_detector_multi()
                     //float **probs = calloc(l.w*l.h*l.n, sizeof(float*));
                     //for(j = 0; j < l.w*l.h*l.n; ++j) probs[j] = (float*)calloc(l.classes, sizeof(float));
 
-                    //#float *X = sized.data; ²»ĞèÒªËõ·Å³ß´çÁË£¬½ÚÔ¼Ê±¼ä
+                    //#float *X = sized.data; ä¸éœ€è¦ç¼©æ”¾å°ºå¯¸äº†ï¼ŒèŠ‚çº¦æ—¶é—´
                     float *X = im.data;
 
-                    /////Ö»ÓĞÊ¶±ğ²¿·Ö£¬Ç°ÃæµÄ¶¼ÊÇÏà¹ØµÄ×¼±¸³ÌĞò
+                    /////åªæœ‰è¯†åˆ«éƒ¨åˆ†ï¼Œå‰é¢çš„éƒ½æ˜¯ç›¸å…³çš„å‡†å¤‡ç¨‹åº
                     //time= what_time_is_it_now();
                     double time2 = get_time_chrono();
                     network_predict(net, X);
@@ -1899,10 +1921,10 @@ void apex_detector_multi()
             else
             {
                 //double time3 = get_time_chrono();
-                //Sleep(1); //µ¥Î»ÊÇºÁÃë£¬sleep 1msÊ±£¬elseÏµÍ³Õ¼ÓÃ×îÉÙ£¬»ù±¾Îª0£¬²»ÖªµÀÎªÉ¶¡£ ÉèÖÃÎª0.5msÔò»áÓĞºÜ¸ßµÄÕ¼ÓÃ18%×óÓÒ£¬ÔÚelseÊ±¡£ÒòÎªsleepµÄ×îĞ¡µ¥Î»ÊÇ1ms£¬ÎŞ·¨¶ÁÈ¡Ğ¡Êı¡£
-                //Sleep(1) ÊÇË¯Ãß1ms£¬Êµ¼Ê²âÊÔÁË¼¸ÖÖ²âÊ±¼äµÄº¯Êı£¬Ó¦¸Ã»¹ÊÇÂù×¼µÄ
-                SleepShort(0.1); //Ë¯Ãß900Î¢Ãë
-                //printf("sleep %lf milli-seconds.\n", ((double)get_time_chrono() - time3) / 1000000); //ºÃÏñÕâ¸öget_time_point(), Êµ²â×îĞ¡Ê±¼ä·Ö±æÂÊÊÇ2ms¡£Î¢Ãë¼¶Ë¯ÃßmicroSleep()£¬ÉèÖÃĞ¡ÓÚ1000Ê±£¬ÏÔÊ¾È«¶¼ÊÇ1.9ms
+                //Sleep(1); //å•ä½æ˜¯æ¯«ç§’ï¼Œsleep 1msæ—¶ï¼Œelseç³»ç»Ÿå ç”¨æœ€å°‘ï¼ŒåŸºæœ¬ä¸º0ï¼Œä¸çŸ¥é“ä¸ºå•¥ã€‚ è®¾ç½®ä¸º0.5msåˆ™ä¼šæœ‰å¾ˆé«˜çš„å ç”¨18%å·¦å³ï¼Œåœ¨elseæ—¶ã€‚å› ä¸ºsleepçš„æœ€å°å•ä½æ˜¯1msï¼Œæ— æ³•è¯»å–å°æ•°ã€‚
+                //Sleep(1) æ˜¯ç¡çœ 1msï¼Œå®é™…æµ‹è¯•äº†å‡ ç§æµ‹æ—¶é—´çš„å‡½æ•°ï¼Œåº”è¯¥è¿˜æ˜¯è›®å‡†çš„
+                SleepShort(0.1); //ç¡çœ 900å¾®ç§’
+                //printf("sleep %lf milli-seconds.\n", ((double)get_time_chrono() - time3) / 1000000); //å¥½åƒè¿™ä¸ªget_time_point(), å®æµ‹æœ€å°æ—¶é—´åˆ†è¾¨ç‡æ˜¯2msã€‚å¾®ç§’çº§ç¡çœ microSleep()ï¼Œè®¾ç½®å°äº1000æ—¶ï¼Œæ˜¾ç¤ºå…¨éƒ½æ˜¯1.9ms
             }
         }
         /*
@@ -1948,13 +1970,13 @@ void apex_detector_multi()
             fclose(fw);
         }
         */
-        //darknet×Ô´øµÄÊÍ·ÅÄÚ´æ
+        //darknetè‡ªå¸¦çš„é‡Šæ”¾å†…å­˜
         //free_detections(dets, nboxes);
         //free_image(im);
         //free_image(sized);
 
-        //ÎÒ±à¼­µÄ£¬ÊÍ·ÅÓÃÓÚ´æ´¢Í¼Æ¬µÄÄÚ´æ
-        //free(image_cut_data); //Õâ¸öÊÍ·ÅÓĞÎÊÌâ
+        //æˆ‘ç¼–è¾‘çš„ï¼Œé‡Šæ”¾ç”¨äºå­˜å‚¨å›¾ç‰‡çš„å†…å­˜
+        //free(image_cut_data); //è¿™ä¸ªé‡Šæ”¾æœ‰é—®é¢˜
         
 
         if (!dont_show) {
@@ -2004,8 +2026,8 @@ void apex_detector_signle()
     ngpus = 1;
 
     //int clear = find_arg(argc, argv, "-clear");
-    char *datacfg = "#apex2019_1class.data"; //±ØĞë·ÅÔÚcfgÎÄ¼ş¼ĞÏÂ£¬³ÌĞòÀïÃæ»á×Ô¶¯×ª»»³Écfg/***
-    char *cfgfile = "#apex_2pred_1class_416_1anchor_yolov3-tiny.cfg"; //±ØĞë·ÅÔÚcfgÎÄ¼ş¼ĞÏÂ
+    char *datacfg = "#apex2019_1class.data"; //å¿…é¡»æ”¾åœ¨cfgæ–‡ä»¶å¤¹ä¸‹ï¼Œç¨‹åºé‡Œé¢ä¼šè‡ªåŠ¨è½¬æ¢æˆcfg/***
+    char *cfgfile = "#apex_2pred_1class_416_1anchor_yolov3-tiny.cfg"; //å¿…é¡»æ”¾åœ¨cfgæ–‡ä»¶å¤¹ä¸‹
     char *weights = "backup/#apex_2pred_1class_416_1anchor_yolov3-tiny_last.weights";
     if (weights)
         if (strlen(weights) > 0)
@@ -2035,7 +2057,7 @@ void apex_detector_signle()
             name_list, names_size, net.layers[net.n - 1].classes, cfgfile);
         if (net.layers[net.n - 1].classes > names_size) getchar();
     }
-    srand(2222222); //Ê¹ÓÃÁËÒ»¸ö¹Ì¶¨µÄËæ»úÊıÖÖ×Ó
+    srand(2222222); //ä½¿ç”¨äº†ä¸€ä¸ªå›ºå®šçš„éšæœºæ•°ç§å­
     char buff[256];
     char *input = buff;
     char *json_buf = NULL;
@@ -2067,17 +2089,17 @@ void apex_detector_signle()
         //image sized = load_image_resize(input, net.w, net.h, net.c, &im);
 
 
-        //im.c;  //ÓÃdarknetÔ¤²âÊ±£¬Ö»ĞèÒª3Í¨µÀ
+        //im.c;  //ç”¨darkneté¢„æµ‹æ—¶ï¼Œåªéœ€è¦3é€šé“
 
         //unsigned char *image_cut_data = (unsigned char*)malloc(cut_width * cut_height * channels);
 
-        ////////////////////////////////////////////////////////////////////////////µ÷ÓÃ½ØÍ¼cutImg();
-        if (!Init())  //ÕâÀï·Ç³£ÖØÒª£¬³õÊ¼»¯½ØÍ¼Ïà¹ØµÄ¶«Î÷£¬±ØĞëÒªÓĞ
+        ////////////////////////////////////////////////////////////////////////////è°ƒç”¨æˆªå›¾cutImg();
+        if (!Init())  //è¿™é‡Œéå¸¸é‡è¦ï¼Œåˆå§‹åŒ–æˆªå›¾ç›¸å…³çš„ä¸œè¥¿ï¼Œå¿…é¡»è¦æœ‰
         {
             Finit();
             printf("not support dxgi.\n");
         }
-        //int* pImgData1 = (int*)malloc(14745600); //ÓÃÓÚÏÂÃæµÄQueryFrame(pImgData1, imgLength);
+        //int* pImgData1 = (int*)malloc(14745600); //ç”¨äºä¸‹é¢çš„QueryFrame(pImgData1, imgLength);
         im.data = 0, im.w = cut_width, im.h = cut_height, im.c = channels;
         capture_result.im_float = 0, capture_result.im_unchar = 0, capture_result.new_flag = 0;
 
@@ -2098,8 +2120,8 @@ void apex_detector_signle()
             {
 
              //double time1 = get_time_chrono();
-            double time1 = get_time_chrono();//Ê±¼äÓ¦¸ÃÊÇ´ÓÍ¼Ïñ¸üĞÂºóµÄÒ»Ë²¼ä
-                capture_result = cutImg(); //ÅĞ¶ÏÍ¼Ïñ¸üĞÂºó£¬»á×Ô¶¯´¦ÀíÍ¼Ïñ£¬ĞèÒª
+            double time1 = get_time_chrono();//æ—¶é—´åº”è¯¥æ˜¯ä»å›¾åƒæ›´æ–°åçš„ä¸€ç¬é—´
+                capture_result = cutImg(); //åˆ¤æ–­å›¾åƒæ›´æ–°åï¼Œä¼šè‡ªåŠ¨å¤„ç†å›¾åƒï¼Œéœ€è¦
             
                 im.data = capture_result.im_float;
 
@@ -2111,10 +2133,10 @@ void apex_detector_signle()
                 //float **probs = calloc(l.w*l.h*l.n, sizeof(float*));
                 //for(j = 0; j < l.w*l.h*l.n; ++j) probs[j] = (float*)calloc(l.classes, sizeof(float));
 
-                //#float *X = sized.data; ²»ĞèÒªËõ·Å³ß´çÁË£¬½ÚÔ¼Ê±¼ä
+                //#float *X = sized.data; ä¸éœ€è¦ç¼©æ”¾å°ºå¯¸äº†ï¼ŒèŠ‚çº¦æ—¶é—´
                 float *X = im.data;
 
-                /////Ö»ÓĞÊ¶±ğ²¿·Ö£¬Ç°ÃæµÄ¶¼ÊÇÏà¹ØµÄ×¼±¸³ÌĞò
+                /////åªæœ‰è¯†åˆ«éƒ¨åˆ†ï¼Œå‰é¢çš„éƒ½æ˜¯ç›¸å…³çš„å‡†å¤‡ç¨‹åº
                 //time= what_time_is_it_now();
                 //double time2 = get_time_chrono();
                 network_predict(net, X);
@@ -2131,7 +2153,7 @@ void apex_detector_signle()
                 //#//#draw_detections_v3(im, dets, nboxes, thresh, names, alphabet, l.classes, ext_output);
                 //save_image(im, "predictions");
                 //i++;
-                ///memcpy(image_cut_data, im.data, image_cut_length); ÓÃÓÚimage compare
+                ///memcpy(image_cut_data, im.data, image_cut_length); ç”¨äºimage compare
 
              double cap_time = (get_time_chrono() - time1) / 1000000;
                 printf("------------------------------------------!!All Detection Done in %lf milli-seconds.\n", cap_time);
@@ -2141,27 +2163,26 @@ void apex_detector_signle()
                 {
                     int sleep_time = (int)((control_time - cap_time) * 1000);
                     //printf("sleep_time%d", sleep_time);
-                    high_precision_microSleep(sleep_time); //Î¢Ãë£¬Õâ¸ö¾«¶È¿ÉÒÔ¿ØÖÆÔÚ¡À3Î¢Ãë,ÓÃÓÚ¾«È·¿ØÖÆ´óÓÚ2msµÄsleep£¬Êµ¼ÊÉÏ²¢²»ÊÇÕæÕıµÄsleep
-                    //microSleep(sleep_time); //Õâ¸öµÄ¾«¶ÈÔÚ1~2ms×óÓÒ,ÊÇÕæµÄsleep£¬µ«ÊÇ²»¹»×¼È·
-                    //nanoSleep(sleep_time*1000); //Õâ¸öµÄ¾«¶ÈÒ»ÑùÊÇÔÚ1~2ms×óÓÒ£¬ÒªÄãºÎÓÃ
+                    high_precision_microSleep(sleep_time); //å¾®ç§’ï¼Œè¿™ä¸ªç²¾åº¦å¯ä»¥æ§åˆ¶åœ¨Â±3å¾®ç§’,ç”¨äºç²¾ç¡®æ§åˆ¶å¤§äº2msçš„sleepï¼Œå®é™…ä¸Šå¹¶ä¸æ˜¯çœŸæ­£çš„sleep
+                    //microSleep(sleep_time); //è¿™ä¸ªçš„ç²¾åº¦åœ¨1~2mså·¦å³,æ˜¯çœŸçš„sleepï¼Œä½†æ˜¯ä¸å¤Ÿå‡†ç¡®
+                    //nanoSleep(sleep_time*1000); //è¿™ä¸ªçš„ç²¾åº¦ä¸€æ ·æ˜¯åœ¨1~2mså·¦å³ï¼Œè¦ä½ ä½•ç”¨
                     //select_microSleep(500);
-                    //Sleep(1); //¾«¶È2ms.
+                    //Sleep(1); //ç²¾åº¦2ms.
                     //SleepShort(sleep_time/1000);
                 }
-                time_end = (double)get_time_chrono();
-                printf("Total time control in %lf milli-seconds.\n", ((time_end - time1) / 1000000));
+                time_end3 = (double)get_time_chrono();
+                printf("Total time control in %lf milli-seconds.\n", ((time_end3 - time1) / 1000000));
                 time_end1 = time_end2;
                 time_end2 = time_end3;
-                time_end3 = time_end;
             }
             else
             {
-                //Sleep(0); CPUÕ¼ÓÃÌ«¸ß£¬¾ÍÊÇÒ»Ö±Ñ­»·Ë¯Ãß2Î¢Ãë¡£
-                //select_microSleep(1); //¾«¶È900Î¢Ãë£¬Ğ¡ÓÚ900µÄÈ«¶¼Ëã900Î¢Ãë¡£cpuÕ¼ÓÃÎª0
-                //select_microSleep(500); //¾«¶È450Î¢Ãë£¬Ğ¡ÓÚ450µÄÈ«¶¼Ëã450Î¢Ãë¡£select_microSleep(500)Ê±»áË¯Ãß950Î¢Ãë
-                //microSleep(sleep_time); //Õâ¸öµÄ¾«¶ÈÔÚ1~2ms×óÓÒ,ÊÇÕæµÄsleep£¬µ«ÊÇ²»¹»×¼È·£¬cpuÕ¼ÓÃÎª0
-                //nanoSleep(sleep_time*1000); //Õâ¸öµÄ¾«¶ÈÒ»ÑùÊÇÔÚ1~2ms×óÓÒ£¬ÒªÄãºÎÓÃ
-                //SleepShort(0.1); //SleepShort(0.1)£¬Ğ¡ÓÚ0.5Ë¯0.45ms,¾«¶È450Î¢Ãë£»cpuÕ¼ÓÃÎª0
+                //Sleep(0); CPUå ç”¨å¤ªé«˜ï¼Œå°±æ˜¯ä¸€ç›´å¾ªç¯ç¡çœ 2å¾®ç§’ã€‚
+                //select_microSleep(1); //ç²¾åº¦900å¾®ç§’ï¼Œå°äº900çš„å…¨éƒ½ç®—900å¾®ç§’ã€‚cpuå ç”¨ä¸º0
+                //select_microSleep(500); //ç²¾åº¦450å¾®ç§’ï¼Œå°äº450çš„å…¨éƒ½ç®—450å¾®ç§’ã€‚select_microSleep(500)æ—¶ä¼šç¡çœ 950å¾®ç§’
+                //microSleep(sleep_time); //è¿™ä¸ªçš„ç²¾åº¦åœ¨1~2mså·¦å³,æ˜¯çœŸçš„sleepï¼Œä½†æ˜¯ä¸å¤Ÿå‡†ç¡®ï¼Œcpuå ç”¨ä¸º0
+                //nanoSleep(sleep_time*1000); //è¿™ä¸ªçš„ç²¾åº¦ä¸€æ ·æ˜¯åœ¨1~2mså·¦å³ï¼Œè¦ä½ ä½•ç”¨
+                //SleepShort(0.1); //SleepShort(0.1)ï¼Œå°äº0.5ç¡0.45ms,ç²¾åº¦450å¾®ç§’ï¼›cpuå ç”¨ä¸º0
 
                 double time1 = get_time_chrono();
                 //CloseHandle(WaitTimer);
@@ -2171,7 +2192,7 @@ void apex_detector_signle()
                 ///int imgLength = 14745600;
                 ///BOOL get_frame = QueryFrame(pImgData1, imgLength);
                 ///printf("%d XXXXX in %lf milli-seconds.\n", get_frame, (((double)get_time_chrono() - time1) / 1000000));
-                SleepShort(0.1); //SleepShort(0.5)Ë¯0.9ms£»SleepShort(0.1)£¬Ğ¡ÓÚ0.5Ë¯0.45ms£»SleepShort(1)Ë¯1.45ms×óÓÒ
+                SleepShort(0.1); //SleepShort(0.5)ç¡0.9msï¼›SleepShort(0.1)ï¼Œå°äº0.5ç¡0.45msï¼›SleepShort(1)ç¡1.45mså·¦å³
                 printf("XXXXX in %lf milli-seconds.\n", (((double)get_time_chrono() - time1) / 1000000));
             }
         }
@@ -2224,8 +2245,8 @@ void run_detector()
     
     //int clear = find_arg(argc, argv, "-clear");
 
-    char *datacfg = "#apex2019_1class.data"; //±ØĞë·ÅÔÚcfgÎÄ¼ş¼ĞÏÂ£¬³ÌĞòÀïÃæ»á×Ô¶¯×ª»»³Écfg/***
-    char *cfg = "#apex_2pred_1class_416_1anchor_yolov3-tiny.cfg"; //±ØĞë·ÅÔÚcfgÎÄ¼ş¼ĞÏÂ
+    char *datacfg = "#apex2019_1class.data"; //å¿…é¡»æ”¾åœ¨cfgæ–‡ä»¶å¤¹ä¸‹ï¼Œç¨‹åºé‡Œé¢ä¼šè‡ªåŠ¨è½¬æ¢æˆcfg/***
+    char *cfg = "#apex_2pred_1class_416_1anchor_yolov3-tiny.cfg"; //å¿…é¡»æ”¾åœ¨cfgæ–‡ä»¶å¤¹ä¸‹
     char *weights = "backup/#apex_2pred_1class_416_1anchor_yolov3-tiny_last.weights";
     if (weights)
         if (strlen(weights) > 0)
@@ -2271,15 +2292,15 @@ int main()
     {
         
 
-        // ´´½¨Ïß³ÌA
+        // åˆ›å»ºçº¿ç¨‹A
         //******************************//
-        //¶àÏß³ÌµÄÊ±ºò£¬Ê¶±ğ³ÌĞò¿ÉÄÜÔÚ¸ü¸ÄÊı¾İµÄÊ±ºò½øĞĞÊı¾İ¶ÁÈ¡²¢Ê¶±ğ£¬»áÔì³É³ÌĞò¿¨ËÀ£¬ĞèÒª½ØÍ¼Íê³ÉºóÔÙ½øĞĞ±ğµÄ¶¯×÷¡£
+        //å¤šçº¿ç¨‹çš„æ—¶å€™ï¼Œè¯†åˆ«ç¨‹åºå¯èƒ½åœ¨æ›´æ”¹æ•°æ®çš„æ—¶å€™è¿›è¡Œæ•°æ®è¯»å–å¹¶è¯†åˆ«ï¼Œä¼šé€ æˆç¨‹åºå¡æ­»ï¼Œéœ€è¦æˆªå›¾å®Œæˆåå†è¿›è¡Œåˆ«çš„åŠ¨ä½œã€‚
         if (pthread_create(&t_capture, NULL, capture, NULL) == -1) {
             puts("fail to create pthread t_capture");
             exit(1);
         }
 
-        Sleep(1000); //1Ãë
+        Sleep(1000); //1ç§’
         if (pthread_create(&t_apex_detector_multi, NULL, apex_detector_multi, NULL) == -1) {
             puts("fail to create pthread t_apex_detector_multi");
             exit(1);
